@@ -1,8 +1,12 @@
+import { Context } from '../../types';
 import { WordpressPostsInput, WordpressPostsOutput } from '../../types/GraphQL';
 import query from './query';
 import { ApolloQueryResult } from 'apollo-client';
 
-const getWordpressPosts = async ({ client, config }, variables: WordpressPostsInput): Promise<ApolloQueryResult<WordpressPostsOutput>> => {
+export default async (
+  { config, client }: Context,
+  variables: WordpressPostsInput
+): Promise<ApolloQueryResult<WordpressPostsOutput>> => {
   const postsData =  await client.query({
     query: query,
     variables: variables,
@@ -11,5 +15,3 @@ const getWordpressPosts = async ({ client, config }, variables: WordpressPostsIn
 
   return postsData?.data?.posts || [];
 };
-
-export default getWordpressPosts;

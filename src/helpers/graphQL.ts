@@ -1,10 +1,13 @@
-import { ApolloLink } from 'apollo-link';
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink, Operation } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { RetryLink } from 'apollo-link-retry';
 import fetch from 'isomorphic-fetch';
 import { Logger } from '@vue-storefront/core';
+import { Config } from '../types';
 
 const createErrorHandler = () => {
   return onError(({ graphQLErrors, networkError }) => {
@@ -29,7 +32,7 @@ const createErrorHandler = () => {
   });
 };
 
-const handleRetry = () => (count, operation, error) => {
+const handleRetry = () => (count: number, operation: Operation, error: any) => {
   if (count > 3) {
     return false;
   }
@@ -43,7 +46,7 @@ const handleRetry = () => (count, operation, error) => {
   return false;
 };
 
-export const graphQLRequest = (config) => {
+export const graphQLRequest = (config: Config) => {
   const baseLink = setContext((apolloReq, { headers }) => ({
     headers: {
       ...headers,
@@ -58,3 +61,9 @@ export const graphQLRequest = (config) => {
 
   return ApolloLink.from([onErrorLink, errorRetry, baseLink.concat(httpLink)]);
 };
+
+export const apolloClientFactory = (customOptions: Record<string, any>) => new ApolloClient({
+  cache: new InMemoryCache(),
+  ...customOptions,
+});
+

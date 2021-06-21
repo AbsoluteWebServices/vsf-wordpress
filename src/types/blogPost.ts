@@ -1,6 +1,4 @@
-export type WordpressPosts = PostInterface[];
-
-export type PostInterface = {
+export interface BlogPost {
   id: number,
   date: string,
   title: string,
@@ -11,7 +9,9 @@ export type PostInterface = {
   }
 };
 
-export type PostSearchParams = {
+export type BlogPosts = BlogPost[];
+
+export interface BlogPostSearchParams {
   searchfor: string,
   limit: number
 };
