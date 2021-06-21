@@ -1,13 +1,13 @@
 import { apiClientFactory } from '@vue-storefront/core';
 import getWordpressPosts from './api/getWordpressPosts';
-import { graphQLRequest } from './helpers/graphQLRequest';
-import { apolloClientFactory } from '@vue-storefront/magento-api/src/helpers/magentoLink/graphQl';
+import { graphQLRequest, apolloClientFactory } from './helpers/graphQL';
+import { ClientInstance, Config } from './types';
 
 const defaultSettings = {
   api: '',
 };
 
-const onCreate = (settings) => {
+const onCreate = (settings: Config): { config: Config; client: ClientInstance } => {
   const config = { ...defaultSettings, ...settings };
   const requestLink = graphQLRequest(config);
   const client = apolloClientFactory({

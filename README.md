@@ -4,7 +4,7 @@
 
 ---
 
-Add your module to `````<Project>/packages`````
+Add your module to `<Project>/packages`
 
 ### Setup
 
@@ -16,8 +16,8 @@ Register the integration in the `middleware.config.js` file.
 module.exports = {
   integrations: {
     wordpress: {
-      location: '@absolute-web/vsf-wordpress-api/server',
-        configuration: {
+      location: "@absolute-web/vsf-wordpress/server",
+      configuration: {
         api: process.env.WORDPRESS_API_URL,
       },
     },
@@ -26,6 +26,7 @@ module.exports = {
 ```
 
 Add `WORDPRESS_API_URL` variable to .env file
+
 ```
 WORDPRESS_API_URL=<API_URL>
 ```
@@ -39,14 +40,14 @@ buildModules: {
     {
       useRawSource: {
         dev: [
-          '@absolute-web/vsf-wordpress-composables',
+          '@absolute-web/vsf-wordpress',
         ],
         prod: [
-          '@absolute-web/vsf-wordpress-composables',
+          '@absolute-web/vsf-wordpress',
         ],
       },
     }
   ],
-  ['@absolute-web/vsf-wordpress-composables/nuxt', {},],
+  ['@absolute-web/vsf-wordpress/nuxt'],
 },
 ```
