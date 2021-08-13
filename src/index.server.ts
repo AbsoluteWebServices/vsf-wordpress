@@ -1,10 +1,13 @@
-import { apiClientFactory } from '@vue-storefront/core';
+import { ApiClientExtension, apiClientFactory } from '@vue-storefront/core';
 import getWordpressPosts from './api/getWordpressPosts';
 import { graphQLRequest, apolloClientFactory } from './helpers/graphQL';
-import { ClientInstance, Config } from './types';
+import { ClientInstance, Config, BlogPost } from './types';
 
 const defaultSettings = {
   api: '',
+  headers: {
+    cacheTagsHeaderName: 'x-cache-tags'
+  }
 };
 
 const onCreate = (settings: Config): { config: Config; client: ClientInstance } => {
@@ -21,9 +24,25 @@ const onCreate = (settings: Config): { config: Config; client: ClientInstance } 
   };
 };
 
+const cacheExtension: ApiClientExtension = {
+  name: 'cacheExtension',
+  hooks: (req, res) => ({
+    afterCall: ({ configuration, response }) => {
+      if (response && response.length) {
+        const cacheTagsHeaderName = configuration.headers?.cacheTagsHeaderName || defaultSettings.headers.cacheTagsHeaderName;
+        const tags = response.map(({ id }: BlogPost) => 'wp_' + id);
+
+        res.header(cacheTagsHeaderName, tags);
+      }
+      return response;
+    }
+  }),
+};
+
 const { createApiClient } = apiClientFactory<any, any>({
   onCreate,
-  api: { getWordpressPosts }
+  api: { getWordpressPosts },
+  extensions: [cacheExtension],
 });
 
 export {

@@ -1,11 +1,23 @@
 import { Context } from '@vue-storefront/core';
+import { useCache } from '@absolute-web/vsf-cache';
 import { BlogPosts, BlogPostSearchParams } from '../types/blogPost';
 import { useBlogPostsFactory, UseBlogPostsFactoryParams } from '../factories/useBlogPostsFactory';
 
 const factoryParams: UseBlogPostsFactoryParams = {
+  provide() {
+    return {
+      cache: useCache(),
+    };
+  },
+
   load: async (context: Context, params: BlogPostSearchParams): Promise<BlogPosts> => {
-    const result = await context.$wordpress.api.getWordpressPosts(params);
-    return result || [];
+    const result: BlogPosts = (await context.$wordpress.api.getWordpressPosts(params)) || [];
+
+    if (result.length) {
+      context.cache.addTags(result.map(({ id }) => ({ prefix: `wp_`, value: id })));
+    }
+
+    return result;
   },
 };
 
