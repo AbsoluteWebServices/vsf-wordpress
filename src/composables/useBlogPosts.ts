@@ -11,7 +11,7 @@ const factoryParams: UseBlogPostsFactoryParams = {
   },
 
   load: async (context: Context, params: BlogPostSearchParams): Promise<BlogPosts> => {
-    const result: BlogPosts = (await context.$wordpress.api.getWordpressPosts(params)) || [];
+    const result: BlogPosts = (await context.$wordpress.getApi.getWordpressPosts(params)) || [];
 
     if (result.length) {
       context.cache.addTags(result.map(({ id }) => ({ prefix: `wp_`, value: id })));
