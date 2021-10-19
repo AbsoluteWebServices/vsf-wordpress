@@ -1,7 +1,7 @@
 import { Context } from '../../types';
 import { WordpressPostsInput, WordpressPostsOutput } from '../../types/GraphQL';
 import query from './query';
-import { ApolloQueryResult } from 'apollo-client';
+import { ApolloQueryResult } from '@apollo/client';
 
 export default async (
   { config, client }: Context,

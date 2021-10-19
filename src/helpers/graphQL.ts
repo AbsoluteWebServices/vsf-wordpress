@@ -1,11 +1,7 @@
-import ApolloClient from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink, Operation } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
-import { createHttpLink } from 'apollo-link-http';
-import { onError } from 'apollo-link-error';
-import { RetryLink } from 'apollo-link-retry';
-import fetch from 'isomorphic-fetch';
+import { ApolloClient, InMemoryCache, Operation, HttpLink, from } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
+import { RetryLink } from '@apollo/client/link/retry';
 import { Logger } from '@vue-storefront/core';
 import { Config } from '../types';
 
@@ -52,14 +48,14 @@ export const graphQLRequest = (config: Config) => {
       ...headers,
     },
   }));
-  const httpLink = createHttpLink({ uri: config.api, fetch });
+  const httpLink = new HttpLink({ uri: config.api });
   const onErrorLink = createErrorHandler();
   const errorRetry = new RetryLink({
     attempts: handleRetry(),
     delay: () => 0,
   });
 
-  return ApolloLink.from([onErrorLink, errorRetry, baseLink.concat(httpLink)]);
+  return from([onErrorLink, errorRetry, baseLink.concat(httpLink)]);
 };
 
 export const apolloClientFactory = (customOptions: Record<string, any>) => new ApolloClient({
