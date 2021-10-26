@@ -1,4 +1,4 @@
-import { ApiClientExtension, apiClientFactory } from '@vue-storefront/core';
+import { ApiClientExtension, apiClientFactory } from '@absolute-web/vsf-core';
 import getWordpressPosts from './api/getWordpressPosts';
 import { graphQLRequest, apolloClientFactory } from './helpers/graphQL';
 import { ClientInstance, Config, BlogPost } from './types';
