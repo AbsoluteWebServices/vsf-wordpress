@@ -1,4 +1,4 @@
-import { CustomQuery } from '@vue-storefront/core';
+import { CustomQuery } from '@absolute-web/vsf-core';
 import { BlogPosts, BlogPostSearchParams } from './blogPost';
 
 export interface WordpressApiMethods {

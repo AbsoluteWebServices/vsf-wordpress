@@ -5,11 +5,11 @@ import {
   FactoryParams,
   Logger,
   sharedRef,
-} from '@vue-storefront/core';
+} from '@absolute-web/vsf-core';
 import { UseBlogPosts, UseBlogPostsErrors } from '../types/composables';
 import { BlogPosts, BlogPostSearchParams } from '../types/blogPost';
 
-export interface UseBlogPostsFactoryParams extends FactoryParams{
+export interface UseBlogPostsFactoryParams extends FactoryParams {
   load: (context: Context, params: BlogPostSearchParams) => Promise<BlogPosts>;
 }
 

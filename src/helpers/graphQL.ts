@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, Operation, HttpLink, from } from '@apollo/
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
-import { Logger } from '@vue-storefront/core';
+import { Logger } from '@absolute-web/vsf-core';
 import { Config } from '../types';
 
 const createErrorHandler = () => {

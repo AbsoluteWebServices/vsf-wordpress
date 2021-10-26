@@ -1,7 +1,6 @@
 {
   "name": "@absolute-web/vsf-wordpress",
   "version": "0.0.1",
-  "private": true,
   "sideEffects": false,
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
@@ -14,9 +13,9 @@
     "prepublish": "yarn build"
   },
   "dependencies": {
-    "@absolute-web/vsf-cache": "^2.3.4",
+    "@absolute-web/vsf-cache": "^0.0.1",
+    "@absolute-web/vsf-core": "^0.0.1",
     "@apollo/client": "^3.4.16",
-    "@vue-storefront/core": "~2.4.1",
     "vue-demi": "latest"
   },
   "devDependencies": {
@@ -38,5 +37,9 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AbsoluteWebServices/vsf-wordpress.git"
   }
 }
