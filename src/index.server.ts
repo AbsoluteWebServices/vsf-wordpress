@@ -32,7 +32,7 @@ const cacheExtension: ApiClientExtension = {
         const cacheTagsHeaderName = configuration.headers?.cacheTagsHeaderName || defaultSettings.headers.cacheTagsHeaderName;
         const tags = response.map(({ id }: BlogPost) => 'wp_' + id);
 
-        res.header(cacheTagsHeaderName, tags);
+        res.header(cacheTagsHeaderName, tags.join(','));
       }
       return response;
     }
