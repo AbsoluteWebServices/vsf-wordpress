@@ -39,9 +39,10 @@ const cacheExtension: ApiClientExtension = {
   }),
 };
 
-const { createApiClient } = apiClientFactory<any, any>({
+const { createApiClient } = apiClientFactory({
   onCreate,
-  api: { getWordpressPosts },
+  api: {},
+  getApi: { getWordpressPosts },
   extensions: [cacheExtension],
 });
 
